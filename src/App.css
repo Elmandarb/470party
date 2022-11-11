@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+#canvas {
+  background-color: #000000;
+}
+#flappy_canvas {
+  background-color: #61dafb;
+}
+#home_canvas {
+  background-color: skyblue;
+}
