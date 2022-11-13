@@ -2,12 +2,14 @@ import React from "react";
 import './App.css';
 import Layout from "./Pages/Layout";
 import Home from "./HomeScreen/Home";
-//import Breakout from "./Pages/Breakout";
+import Select from "./SelectScreen/Select";
 import NoPage from "./Pages/NoPage";
 import ReactDOM from "react-dom/client";
 import Breakout from "./Breakout";
 import {BrowserRouter as BrowserRouter, Routes, Route} from "react-router-dom";
 import FlappyGame from "./FlappyGame";
+import Scores from "./HighScores/Scores";
+
 
 /*
 <Router>
@@ -43,6 +45,8 @@ function App() {
                   <Route index element={<Home />} />
                   <Route path="breakout" element={<Breakout />} />
                   <Route path="Flappy" element={<FlappyGame/>} />
+                  <Route path= "Select" element = {<Select/>}/>
+                  <Route path= "Scores" element = {<Scores/>}/>
                   <Route path="*" element={<NoPage />} />
               </Route>
           </Routes>
