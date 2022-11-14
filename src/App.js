@@ -9,6 +9,7 @@ import Breakout from "./Breakout";
 import {BrowserRouter as BrowserRouter, Routes, Route} from "react-router-dom";
 import FlappyGame from "./FlappyGame";
 import Scores from "./HighScores/Scores";
+import Board from "./MainBoard/Board";
 
 
 /*
@@ -47,6 +48,7 @@ function App() {
                   <Route path="Flappy" element={<FlappyGame/>} />
                   <Route path= "Select" element = {<Select/>}/>
                   <Route path= "Scores" element = {<Scores/>}/>
+                  <Route path= "Board" element = {<Board/>}/>
                   <Route path="*" element={<NoPage />} />
               </Route>
           </Routes>

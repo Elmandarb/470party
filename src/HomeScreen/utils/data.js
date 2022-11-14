@@ -6,11 +6,6 @@ export default {
     bg2: {
         x: 900,
         y: 0
-    },
-    playButton: {
-
-    },
-    hsButton: {
-
     }
+
 };
