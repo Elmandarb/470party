@@ -13,6 +13,9 @@ import resetBall from "./utils/reset";
 let x = 0;
 let bricks = [];
 let {ball,paddleProps,brick,player} = data;
+let ins = true;
+const initSpeed = 3;
+player.name = localStorage.getItem('current_name');
 export default function Board() {
     const canvasRef = useRef(null);
 
@@ -22,6 +25,17 @@ export default function Board() {
         const render = () => {
             const canvas = canvasRef.current;
             const ctx = canvas.getContext('2d');
+
+            canvas.addEventListener('mousedown', function(e) {
+                getCursorPosition(canvas, e);
+            });
+            function getCursorPosition(canvas, event) {
+                if(ins) {
+                    ins = false;
+                    ball.dy = initSpeed;
+                    ball.dx = initSpeed;
+                }
+            }
             paddleProps.y = canvas.height-30;
 
             ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -33,8 +47,22 @@ export default function Board() {
                 bricks.length = 0;
                 player.lives = 3;
                 player.level = 2;
-                player.score = 0;
+                //player.score = 0;
                 brick.y = 50;
+                let ind = Number(localStorage.getItem('pIndex'));
+                //if(player.score >= )
+                if(ind === 0) {
+                    localStorage.setItem('p1score', String(Number(localStorage.getItem('p1score'))+player.score));
+                }
+                else if(ind === 1) {
+                    localStorage.setItem('p2score', String(Number(localStorage.getItem('p2score'))+player.score));
+                }
+                else if(ind === 2) {
+                    localStorage.setItem('p3score', String(Number(localStorage.getItem('p3score'))+player.score));
+                }
+                else if(ind === 3) {
+                    localStorage.setItem('p4score', String(Number(localStorage.getItem('p4score'))+player.score));
+                }
                 resetBall(ball,canvas,paddleProps);
                 window.close();
 
@@ -82,6 +110,18 @@ export default function Board() {
             }
             Paddle(ctx,canvas,paddleProps);
             paddleHit(ball,paddleProps);
+            if(ins) {
+                ctx.globalAlpha = 0.625;
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0,0,900,600);
+                ctx.fillStyle = 'yellow';
+                let b = 30;
+                ctx.fillText("Control Paddle with mouse cursor",240+b,150);
+                ctx.fillText("Hit the ball with the paddle to break the bricks",200+b,200);
+                ctx.fillText("don't let the ball hit the bottom",260+b,250);
+                ctx.fillText("Click to start!",320+b,300);
+                ctx.globalAlpha = 1;
+            }
             requestAnimationFrame(render);
         }
         render();

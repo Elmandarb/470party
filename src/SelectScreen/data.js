@@ -82,5 +82,8 @@ export default {
         dx : -.5,
         dy : -1,
         star_rad : 1
+    },
+    entry_1: {
+        text : ""
     }
 };

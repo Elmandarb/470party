@@ -45,6 +45,40 @@
 #home_canvas {
   background-color: skyblue;
 }
+
+#wrapper {
+  position:relative;
+}
 #select_canvas {
+  position:absolute;
   background-color: midnightblue;
 }
+#main_canvas {
+  background-color: skyblue;
+}
+#name_one {
+  position:absolute;
+  left:278px;
+  top:305px;
+  color: azure;
+  visibility:hidden;
+}
+#name_two {
+  position:absolute;
+  left:28px;
+  top:3px;
+  visibility:hidden;
+}
+#name_three {
+  position:absolute;
+  left:28px;
+  top:3px;
+  visibility:hidden;
+}
+#name_four {
+  position:absolute;
+  left:28px;
+  top:3px;
+  visibility:hidden;
+}
+
