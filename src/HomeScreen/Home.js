@@ -26,18 +26,19 @@ export default function Home() {
     useEffect(()=> {
         const render = () => {
             const canvas = canvasRef2.current;
+            const rect = canvas.getBoundingClientRect();
             const ctx = canvas.getContext('2d');
             canvas.addEventListener('mousedown', function(e) {
                 getCursorPosition(canvas, e);
             });
             function getCursorPosition(canvas, event) {
-                //const rect = canvas.getBoundingClientRect();
-                const x = event.clientX;
-                const y = event.clientY;
-                if(x > 315 && x < 590 && y > 370 && y < 480) {
+
+                const x = event.clientX-rect.left;
+                const y = event.clientY-rect.top;
+                if(x > 312 && x < 312+276 && y > 285 && y < 285+102) {
                     window.location.href='/select';
                 }
-                if(x > 250 && x < 660 && y > 520 && y < 635) {
+                if(x > 247.5 && x < 247.5+405 && y > 430 && y < 435+102) {
                     window.location.href='/Scores';
                 }
                 console.log("x: " + x + " y: " + y);
@@ -70,7 +71,7 @@ export default function Home() {
             ctx.beginPath();
             ctx.roundRect(312, 285, 276, 102, [30]);
             ctx.stroke();
-            if(buttonOver.x > 315 && buttonOver.x < 590 && buttonOver.y > 370 && buttonOver.y < 480) { //384
+            if(buttonOver.x-rect.left > 312 && buttonOver.x - rect.left < 312+276 && buttonOver.y -rect.top > 285 && buttonOver.y-rect.top < 285+102) { //384
                 ctx.fillStyle = 'green';
             } else {
                 ctx.fillStyle = 'gray';
@@ -79,7 +80,7 @@ export default function Home() {
             ctx.beginPath();
             ctx.roundRect(247.5, 435, 405, 102, [30]);
             ctx.stroke();
-            if(buttonOver.x > 250 && buttonOver.x < 660 && buttonOver.y > 520 && buttonOver.y < 635) { //384
+            if(buttonOver.x-rect.left > 247.5 && buttonOver.x-rect.left < 247.5+405 && buttonOver.y-rect.top > 435 && buttonOver.y-rect.top < 435+102) { //384
                 ctx.fillStyle = 'green';
             } else {
                 ctx.fillStyle = 'gray';

@@ -12,13 +12,6 @@ export default (ctx,canvas, props) => {
             ctx.beginPath();
             ctx.rect(this.x, this.y, this.width, this.height);
 
-
-            /*ctx.fillStyle = this.broke ? "white" : "red";
-            ctx.strokeStyle = this.broke ? "white" : "red";
-            ctx.lineWidth = 1;
-            ctx.fillStyle = this.broke ? "white" : this.colors[1];
-            ctx.shadowBlur = 0;
-            ctx.shadowColor = "blue"; */
             ctx.strokeRect(this.x, this.y, this.width, this.height);
             ctx.fill();
         }

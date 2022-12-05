@@ -37,8 +37,8 @@ const Board = () => {
         players.push(player4);
         //positions.push(player4.position);
     }
-    let needRoll = true;
-    let turn = 0;
+    let needRoll = useRef(true);
+    let turn = useRef(0);
     let timer = 0;
     const game = useRef('');
     let gamesArray = [...games.singleGames];
@@ -63,10 +63,85 @@ const Board = () => {
         positions.push(player4.position);
         localStorage.setItem('p4score', '0');
     }
-    let num_roll = 0;
-    const multiPlayer = useRef(0);
+    let num_roll = useRef(0);
+    let multiPlayer = useRef(0);
     useEffect(()=> {
         const render = () => {
+            positions[0] = player1.position;
+            if(positions[0] > 25) {
+                //p1wins
+                localStorage.setItem('p1score', String(Number(localStorage.getItem('p1score'))+1000));
+                localStorage.setItem('winner', 'p1' );
+                player1.position = 0;
+                window.location.href='/End';
+            }
+            if(gameStuff.players > 1) {
+                positions[1] = player2.position;
+                if(positions[1] > 25) {
+                    //p2wins
+                    localStorage.setItem('p2score', String(Number(localStorage.getItem('p2score'))+1000));
+                    localStorage.setItem('winner', 'p2' );
+                    player2.position = 0;
+                    window.location.href='/End';
+                }
+            }
+            if(gameStuff.players > 2) {
+                positions[2] = player3.position;
+                if(positions[2] > 25) {
+                    //p3wins
+                    localStorage.setItem('p3score', String(Number(localStorage.getItem('p3score'))+1000));
+                    localStorage.setItem('winner', 'p3' );
+                    player3.position = 0;
+                    window.location.href='/End';
+                }
+            }
+            if(gameStuff.players > 3) {
+                positions[3] = player4.position;
+                if(positions[3] > 25) {
+                    //p4wins
+                    localStorage.setItem('p4score', String(Number(localStorage.getItem('p4score'))+1000));
+                    localStorage.setItem('winner', 'p4' );
+                    player4.position = 0;
+                    window.location.href='/End';
+                }
+            }
+            if(turn.current > gameStuff.players-1) {
+                turn.current = 0;
+                let copy = 0;
+            }
+            if(localStorage.getItem('oAdvance') === '1') {
+                localStorage.setItem('oAdvance','0');
+                let index = Number(localStorage.getItem('oIndex'));
+                if(index === 0) {
+                    player1.position+=num_roll.current;
+                }
+                else if(index === 1) {
+                    player2.position+=num_roll.current;
+                }
+                else if(index === 2) {
+                    player3.position+=num_roll.current;
+                }
+                else if(index === 3) {
+                    player4.position+=num_roll.current;
+                }
+            }
+            if(localStorage.getItem('advance') === '1') {
+                localStorage.setItem('advance','0');
+                let index = Number(localStorage.getItem('pIndex'));
+                if(index === 0) {
+                    player1.position+=num_roll.current;
+                }
+                else if(index === 1) {
+                    player2.position+=num_roll.current;
+                }
+                else if(index === 2) {
+                    player3.position+=num_roll.current;
+                }
+                else if(index === 3) {
+                    player4.position+=num_roll.current;
+                }
+            }
+            //Updating scores based on games
             player1.score = Number(localStorage.getItem('p1score'));
             if(gameStuff.players > 1) {
                 player2.score = Number(localStorage.getItem('p2score'));
@@ -91,7 +166,7 @@ const Board = () => {
             //drawing the names in the board
             drawScores(gameStuff.players,players,canvas,ctx);
             //drawing next player up
-            drawNext(gameStuff.players, players,turn,ctx);
+            drawNext(gameStuff.players, players,turn.current,ctx);
             /*
             for(let ind in gamesArray) {
                 ctx.fillText(gamesArray[ind],300,300+(ind*30));
@@ -109,46 +184,77 @@ const Board = () => {
                 const rect = canvas.getBoundingClientRect();
                 const x = event.clientX - rect.left;
                 const y = event.clientY - rect.top;
-                if(x > 598 && x < 738 && y > 182 && y < 282 && needRoll) {
-                    needRoll = false;
-                    num_roll = Math.floor(Math.random()*3)+1;
+                if(x > 598 && x < 738 && y > 182 && y < 282 ) {
+                    needRoll.current = false;
+                    num_roll.current = Math.floor(Math.random()*3)+1;
                     //assigns number of movement spaces from 1 to 3
                     game.current = gamesArray[(Math.floor(Math.random()*gamesArray.length))];
                     if(games.multiGames.includes(game.current)) {
                         multiPlayer.current = Math.floor(Math.random()*gameStuff.players);
-                        while(multiPlayer.current === turn+1) {
+                        while(multiPlayer.current === turn.current) {
                             multiPlayer.current = Math.floor(Math.random()*gameStuff.players);
                         }
                     }
 
                 }
-                if(x > 598 && x < 738 && y > 332 && y < 432 && !needRoll) {
+                if(x > 598 && x < 738 && y > 332 && y < 432 && !needRoll.current) {
                     //let game = games[Math.floor(Math.random()*gamesArray.length)];
                     if(games.multiGames.includes(game.current)) {
+                        localStorage.setItem('current_name', players[turn.current].name);
+                        localStorage.setItem('opponent_name', players[multiPlayer.current].name);
+                        localStorage.setItem('pIndex', String(turn.current));
+                        localStorage.setItem('oIndex', String(multiPlayer.current));
+                        turn.current++;
+                        needRoll.current = true;
+                        if(game.current === 'Flappy') {
+                            window.open('/flappy','_blank');
+                        }
+                        else if(game.current === 'Pong') {
+                            window.open('/pong','_blank');
+                        }
+                        else if(game.current === 'PuzzlerTwo') {
+                            window.open('/puzzler','_blank');
+                        }
+                        else if(game.current === 'Puzzler2') {
+                            window.open('/puzzler2','_blank');
+                        }
                         //launch 2p game
                     }
                     else {
                         //launch 1p game
-                        if(game.current === 'breakout') {
-                            localStorage.setItem('current_name', players[turn].name);
-                            localStorage.setItem('pIndex', String(turn));
-                            turn++;
-                            needRoll = true;
+                        localStorage.setItem('current_name', players[turn.current].name);
+                        localStorage.setItem('pIndex', String(turn.current));
+                        turn.current++;
+                        needRoll.current = true;
+                        if(game.current === 'Breakout') {
                             window.open('/breakout','_blank');
                         }
-                        else if(game.current === 'breakout') {
-                            window.open('/breakout','_blank');
+                        else if(game.current === 'Baseball') {
+                            window.open('/Baseball','_blank');
+                        }
+                        else if(game.current === 'snake') {
+                            window.open('/snake','_blank');
+                        }
+                        else if(game.current === 'Tetris') {
+                            window.open('/tetris','_blank');
+                        }
+                        else if(game.current === 'Connect Four') {
+                            window.open('/connect4','_blank');
                         }
                     }
                 }
             }
-            if(!needRoll) {
-                ctx.fillText(`Game: ${game.current}`, 360, 350);
-                ctx.fillText(`Roll: ${num_roll}`,360,300);
+            if(!needRoll.current) {
+                ctx.fillText(`Game: ${game.current}`, 350, 350);
+                ctx.fillText(`Roll: ${num_roll.current}`,350,300);
+                //ctx.fillText(`advance: ${localStorage.getItem('advance')}`,360,400);
+                //ctx.fillText(`turn: ${turn.current}`,360,450);
                 if(games.multiGames.includes(game.current)) {
-                    ctx.fillText(`Against: ${players[multiPlayer.current].name}`, 360, 250);
+                    ctx.fillText(`Against: ${players[multiPlayer.current].name}`, 350, 250);
+                    //ctx.fillText(`Against: ${multiPlayer.current}`, 360, 220);
                 }
             }
+
             ctx.strokeStyle = 'black';
             ctx.lineWidth = 10;
             ctx.beginPath();

@@ -60,6 +60,7 @@ export default function drawTokens(ctx, playerPos) {
         yPos+=100;
     }
     yPos = 500;
+    xPos = 100;
     while (xPos < 900) {
         let edgeTile = new tile(xPos,yPos);
         if(playerPos.includes(tileNum)) {
@@ -90,6 +91,7 @@ export default function drawTokens(ctx, playerPos) {
         xPos+=100;
     }
     xPos = 800;
+    yPos = 400;
     while(yPos >= 0) {
         let rightTile = new tile(xPos,yPos);
         if(playerPos.includes(tileNum)) {
@@ -120,6 +122,7 @@ export default function drawTokens(ctx, playerPos) {
         yPos-=100;
     }
     yPos = 0;
+    xPos = 700;
     while (xPos > 0) {
         let topTile = new tile(xPos,yPos);
         if(playerPos.includes(tileNum)) {

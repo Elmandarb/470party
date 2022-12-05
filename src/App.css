@@ -36,6 +36,9 @@
     transform: rotate(360deg);
   }
 }
+#baseball_canvas {
+  background-color: azure;
+}
 #canvas {
   background-color: #000000;
 }
@@ -55,6 +58,9 @@
 }
 #main_canvas {
   background-color: skyblue;
+}
+#end_canvas {
+  background-color: black;
 }
 #name_one {
   position:absolute;

@@ -3,7 +3,7 @@ export default function drawScores(numPlayers, players, canvas, ctx) {
     let namePos = [150,200,250,300];
 
     ctx.lineWidth = 0.5;
-    ctx.font = '20px sans-serif';
+    ctx.font = '22px sans-serif';
     ctx.strokeStyle = players[0].color;
     ctx.fillStyle = players[0].color;
     let offset = 60;

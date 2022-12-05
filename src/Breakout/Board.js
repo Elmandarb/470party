@@ -50,7 +50,11 @@ export default function Board() {
                 //player.score = 0;
                 brick.y = 50;
                 let ind = Number(localStorage.getItem('pIndex'));
-                //if(player.score >= )
+                localStorage.setItem('advance','0');
+                if(player.score >= player.winScore) {
+                    localStorage.setItem('advance','1');
+                }
+
                 if(ind === 0) {
                     localStorage.setItem('p1score', String(Number(localStorage.getItem('p1score'))+player.score));
                 }

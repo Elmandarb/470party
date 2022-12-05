@@ -32,6 +32,11 @@ export default function Flappy() {
         let timerOffset = 60;
         let keys = [];
         let round = 1;
+        //localStorage.setItem('pIndex', String(turn.current));
+        //localStorage.setItem('oIndex', String(multiPlayer.current));
+        player1.name = localStorage.getItem('current_name');
+        player2.name = localStorage.getItem('opponent_name');
+
         function moveSomething(e) {
                 keys[e.keyCode] = true;
 
@@ -205,12 +210,42 @@ export default function Flappy() {
                          */
                         //winner checking
                         if(player1.lives === 0) {
+                                //alert(`Game over! ${player2.name} wins! Score is: ${player2.lives*100}`);
+                                localStorage.setItem('oAdvance','1');
+                                let ind = Number(localStorage.getItem('oIndex'));
+                                if(ind === 0) {
+                                        localStorage.setItem('p1score', String(Number(localStorage.getItem('p1score'))+player2.lives*100));
+                                }
+                                else if(ind === 1) {
+                                        localStorage.setItem('p2score', String(Number(localStorage.getItem('p2score'))+player2.lives*100));
+                                }
+                                else if(ind === 2) {
+                                        localStorage.setItem('p3score', String(Number(localStorage.getItem('p3score'))+player2.lives*100));
+                                }
+                                else if(ind === 3) {
+                                        localStorage.setItem('p4score', String(Number(localStorage.getItem('p4score'))+player2.lives*100));
+                                }
                                 alert(`Game over! ${player2.name} wins! Score is: ${player2.lives*100}`);
                                 player2.lives = 4;
                                 player1.lives = 4;
                                 window.close();
                         }
                         if(player2.lives === 0) {
+                                //alert(`Game over! ${player1.name} wins! Score is: ${player1.lives*100}`);
+                                let ind = Number(localStorage.getItem('pIndex'));
+                                localStorage.setItem('advance','1');
+                                if(ind === 0) {
+                                        localStorage.setItem('p1score', String(Number(localStorage.getItem('p1score'))+player1.lives*100));
+                                }
+                                else if(ind === 1) {
+                                        localStorage.setItem('p2score', String(Number(localStorage.getItem('p2score'))+player1.lives*100));
+                                }
+                                else if(ind === 2) {
+                                        localStorage.setItem('p3score', String(Number(localStorage.getItem('p3score'))+player1.lives*100));
+                                }
+                                else if(ind === 3) {
+                                        localStorage.setItem('p4score', String(Number(localStorage.getItem('p4score'))+player1.lives*100));
+                                }
                                 alert(`Game over! ${player1.name} wins! Score is: ${player1.lives*100}`);
                                 player2.lives = 4;
                                 player1.lives = 4;
@@ -253,8 +288,8 @@ export function drawImageRot(ctx,img,x,y,width,height,deg){
         ctx.restore();
 }
 
-
 export function drawImageRot2(ctx,img,col,row,fWidth,fHeight,x,y,dx,dy){
+        // need to improve this function
         // Store the current context state (i.e. rotation, translation etc..)
         ctx.save()
 

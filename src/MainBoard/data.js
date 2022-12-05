@@ -39,7 +39,7 @@ export default {
         turnOrder : 3
     },
     games : {
-        singleGames: ['breakout', 'secondGame'],
-        multiGames: ['flappy', 'drMario']
+        singleGames: ['Breakout', 'Tetris','Baseball','Connect Four','snake'],
+        multiGames: ['Flappy','Pong', 'PuzzlerTwo','Puzzler2']
     }
 }
